@@ -39,6 +39,12 @@ func main() {
 		case "end":
 			log.Println("Exiting go-memdb...")
 			os.Exit(0)
+		case "rollback":
+			db.Rollback()
+		case "commit":
+			db.Commit()
+		case "begin":
+			db.Begin()
 		default:
 			log.Println("[WARN] unsupported query")
 		}
