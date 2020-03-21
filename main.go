@@ -62,7 +62,11 @@ func get(db *memdb.MemDB, query []string) {
 
 	value := db.Get(query[1])
 
-	fmt.Println(value)
+	if value != nil {
+		fmt.Println(*value)
+	} else {
+		fmt.Println("NULL")
+	}
 }
 
 func deleteEntry(db *memdb.MemDB, query []string) {
