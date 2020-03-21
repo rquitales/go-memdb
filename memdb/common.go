@@ -28,16 +28,17 @@ func NewDB() *MemDB {
 
 // Set will set the key in the database to the given value
 func (d *MemDB) Set(key, value string) {
+	// Check if the key existed before
+	var before interface{}
+	var ok bool
+	if before, ok = d.Data[key]; !ok {
+		before = nil
+	}
+
 	// Check if a transaction exists, if so, log
 	// the action to the transaction log
 	if len(d.transaction) != 0 {
 		temp := d.transaction[len(d.transaction)-1]
-
-		var before interface{}
-		var ok bool
-		if before, ok = d.Data[key]; !ok {
-			before = nil
-		}
 
 		temp.Push(before, value, key)
 		d.transaction[len(d.transaction)-1] = temp
@@ -56,6 +57,15 @@ func (d *MemDB) Set(key, value string) {
 
 		temp.Add(key)
 		d.index[value] = temp
+	}
+
+	// Remove "old" value from index
+	if ok && before.(string) != value {
+		temp := d.index[before.(string)]
+		if temp != nil {
+			temp.Delete(key)
+			d.index[before.(string)] = temp
+		}
 	}
 }
 
