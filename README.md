@@ -49,6 +49,7 @@ db := memdb.NewDB()
 Please refer to the [GoDoc](https://pkg.go.dev/github.com/rquitales/go-memdb) page full documentation. A example CLI implementation of `memdb` can also be seen in the [main.go](main.go) file.
 
 ### Running The Example CLI
+#### From Source
  1. Download the appropriate binary from your target OS from the [releases page](https://github.com/rquitales/go-memdb/releases), or compile from source with `go build -v .` after cloning this repository.
  2. Start the executable, eg: `./go-memdb`
  3. Type your commands (into STDIN)
@@ -65,6 +66,15 @@ Please refer to the [GoDoc](https://pkg.go.dev/github.com/rquitales/go-memdb) pa
 
 The query/functions are case insensitive, but the key/values are case sensitive!
 
+#### With Docker
+1. Build the docker image from the given Dockerfile in this project:
+    ```
+    docker build -t go-memdb .
+    ```
+2. Run the built image in a container interactively:
+    ```
+    docker run -it --rm go-memdb
+    ```
 
 
 
