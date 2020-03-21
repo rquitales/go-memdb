@@ -61,12 +61,10 @@ func (d *MemDB) Set(key, value string) {
 
 // Get returns the value for the given name, else,
 // a nil pointer is returned.
-func (d *MemDB) Get(key string) *string {
-	if value, ok := d.Data[key]; ok {
-		return &value
-	}
+func (d *MemDB) Get(key string) (value string, ok bool) {
+	value, ok = d.Data[key]
 
-	return nil
+	return
 }
 
 // Delete will remove a key from the database.

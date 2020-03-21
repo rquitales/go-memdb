@@ -40,7 +40,11 @@ func main() {
 			log.Println("Exiting go-memdb...")
 			os.Exit(0)
 		case "rollback":
-			db.Rollback()
+			ok := db.Rollback()
+
+			if !ok {
+				log.Println("[WARN] TRANSACTION NOT FOUND")
+			}
 		case "commit":
 			db.Commit()
 		case "begin":
@@ -66,10 +70,8 @@ func get(db *memdb.MemDB, query []string) {
 		return
 	}
 
-	value := db.Get(query[1])
-
-	if value != nil {
-		fmt.Println(*value)
+	if value, ok := db.Get(query[1]); ok {
+		fmt.Println(value)
 	} else {
 		fmt.Println("NULL")
 	}
