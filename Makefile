@@ -13,7 +13,7 @@ build:
 run:	
 	go run .
 test:	
-	go test -v . -coverprofile /tmp/go-memdb.txt
+	go test -v ./... -coverprofile /tmp/go-memdb.txt
 vet:
 	go vet ./...
 deps:	
